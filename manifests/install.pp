@@ -38,7 +38,7 @@ class instana_agent::install {
       ensure  => 'present',
       id      => 'B878152E2F084D46F878FA20BED2D0969BAD82DE',
       source  => 'https://packages.instana.io/Instana.gpg',
-      options => "http-proxy=\"${instana_agent_proxy_type}://${instana_agent_proxy_username}:${instana_agent_proxy_password}@${instana_agent_proxy_host}:${instana_agent_proxy_port}\""
+      options => "http-proxy=\"${$instana_agent::instana_agent_proxy_type}://${$instana_agent::instana_agent_proxy_username}:${$instana_agent::instana_agent_proxy_password}@${$instana_agent::instana_agent_proxy_host}:${$instana_agent::instana_agent_proxy_port}\""
     }
 
     apt::source { 'instana-agent':
@@ -86,9 +86,9 @@ class instana_agent::install {
       gpgcheck       => true,
       repo_gpgcheck  => true,
       sslverify      => true,
-      proxy          => "${instana_agent_proxy_type}://${instana_agent_proxy_host}:${instana_agent_proxy_port}",
-      proxy_username => $instana_agent_proxy_username,
-      proxy_password => $instana_agent_proxy_password
+      proxy          => "${$instana_agent::instana_agent_proxy_type}://${$instana_agent::instana_agent_proxy_host}:${$instana_agent::instana_agent_proxy_port}",
+      proxy_username => $instana_agent::instana_agent_proxy_username,
+      proxy_password => $instana_agent::instana_agent_proxy_password
     }
     Yumrepo['Instana-Agent']
       ~> Package["instana-agent-${$instana_agent::instana_agent_flavor}"]
